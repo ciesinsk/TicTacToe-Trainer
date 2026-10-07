@@ -108,3 +108,39 @@ Die Folge **X1, O5, X6** bewahrt deine Remischance und bereitet eine mögliche G
 O kann diese Falle vermeiden: Mit **2, 3, 8 oder 9** als zweitem O-Zug bleibt bei optimalem Spiel ein Remis möglich. Diese Antworten sind also keine entscheidenden Fehler.
 
 **Merksatz:** Bereite eine Gabel vor, ohne selbst einen erzwungenen Verlust zuzulassen. Prüfe dabei auch die Drohungen von O. Im Trainer zeigt **Zug prüfen / Tipp**, ob deine Stellung weiterhin remis ist oder nach einem Fehler des Gegners einen erzwungenen Gewinn enthält.
+
+## Als O einen Fehler im zweiten Zug von X ausnutzen
+
+Gemeint ist der **zweite eigene Zug von X**, also der dritte Zug der Partie: **X, O, X**. Voraussetzung ist, dass du als O zunächst die Remischance bewahrt hast. Ein entscheidender Fehler von X ermöglicht dir dann einen erzwungenen Sieg, auch wenn X sich anschließend optimal verteidigt.
+
+### Wann kann X schon im zweiten Zug entscheidend falsch spielen?
+
+| X eröffnet | Deine erste Antwort als O | Zweite X-Züge, die O einen erzwungenen Sieg ermöglichen |
+| --- | --- | --- |
+| 5 | 1 (stellvertretend für jede Ecke) | Keine. |
+| 1 | 5 | Keine. |
+| 2 | 1 | 3, 6, 8 |
+| 2 | 3 | 1, 4, 8 |
+| 2 | 5 | 8 |
+| 2 | 8 | Keine. |
+
+Alle anderen Eröffnungen ergeben sich durch Drehen oder Spiegeln. Nach einer Mittel- oder Eckeneröffnung von X und deiner richtigen Antwort bleibt mit jedem legalen zweiten X-Zug bei optimalem Spiel ein Remis möglich. Du brauchst dort einen späteren Fehler. Auch nach **X2, O8** kann X im zweiten Zug noch keinen entscheidenden Fehler machen.
+
+### Vier Gewinnmuster für O
+
+Nach einer Kanteneröffnung gibt es vier Grundfälle. Jede Zeile wird von links nach rechts gespielt: **X, O, X, O, X, O**. Dein zweiter O-Zug erzeugt zunächst eine einfache Drohung. X muss sie blocken; dein dritter O-Zug setzt dann eine Gabel.
+
+| X eröffnet | O antwortet | X macht den Fehler | O droht | X muss blocken | O setzt die Gabel | O droht auf |
+| --- | --- | --- | --- | --- | --- | --- |
+| 2 | 1 | 3 | 4 | 7 | 5 | 6 und 9 |
+| 2 | 1 | 6 | 7 | 4 | 5 | 3 und 9 |
+| 2 | 1 | 8 | 5 | 9 | 7 | 3 und 4 |
+| 2 | 5 | 8 | 1 | 9 | 7 | 3 und 4 |
+
+Blockt X deine erste Drohung nicht, gewinnst du sofort auf dem Feld in „X muss blocken“. Blockt X, erzeugst du die angegebene Gabel. X kann nur eines deiner beiden Gewinnfelder besetzen; du gewinnst auf dem anderen. Die Gabelzüge lassen X in diesen Beispielen keinen eigenen sofortigen Gewinn.
+
+**Beispiel mit gleichzeitiger Abwehr:** Nach **X2, O1, X3** spielst du **O4** und drohst auf **7** über die Spalte 1–4–7. Nach dem erzwungenen **X7** spielst du **O5**. Damit blockst du zugleich die Diagonale 3–5–7 von X und drohst selbst auf **6** über die Reihe 4–5–6 sowie auf **9** über die Diagonale 1–5–9.
+
+**Gegenüberliegende Kanten ausnutzen:** Nach **X2, O5, X8** haben die beiden X-Steine keine gemeinsame freie Dreierreihe mehr, weil du die Mitte besetzt hältst. Mit **O1** drohst du auf **9**. Nach **X9** setzt du **O7**, blockst damit zugleich die Reihe 7–8–9 von X und erzeugst deine Gabel auf **3** und **4**. In dieser Ausgangsstellung ist O1 eine konkrete Gewinnfortsetzung; auch die anderen freien Felder ermöglichen bei richtigem Weiterspielen einen erzwungenen Sieg.
+
+Zum Üben wähle im Trainer **O** und **Früh: bei erster Gelegenheit**. X beginnt und macht höchstens einen entscheidenden Fehler; die passende Gelegenheit muss nicht bereits in seinem zweiten Zug auftreten. **Zug prüfen / Tipp** zeigt dir, ob O einen Gewinn erzwingen kann und welche Züge ihn bewahren.
