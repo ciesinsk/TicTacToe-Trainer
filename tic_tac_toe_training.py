@@ -1,15 +1,15 @@
 """Tic-Tac-Toe Trainer
 
 Start: python tic_tac_toe_training.py
-Benötigt nur die Python-Standardbibliothek (Tkinter).
+Tkinter; für den README-Viewer zusätzlich: pip install -r requirements.txt
 """
 
 import random
 import tkinter as tk
+import webbrowser
 from functools import lru_cache
 from pathlib import Path
 from tkinter import messagebox, ttk
-from tkinter.scrolledtext import ScrolledText
 
 
 LINES = (
@@ -18,6 +18,26 @@ LINES = (
     (0, 4, 8), (2, 4, 6),
 )
 EMPTY = "." * 9
+
+
+def render_readme(content):
+    """Erzeugt HTML im Speicher; die README bleibt die einzige Quelldatei."""
+    import markdown
+
+    body = markdown.markdown(content, extensions=["tables", "fenced_code"])
+    return """<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+body { font-family: sans-serif; font-size: 14px; color: #202020;
+       background-color: white; margin: 20px; }
+h1 { font-size: 26px; } h2 { font-size: 20px; }
+p, li { line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #cccccc; padding: 8px; text-align: left; }
+th { background-color: #eeeeee; }
+pre { background-color: #f3f3f3; padding: 12px; }
+code { font-family: monospace; }
+a { color: #1559a6; }
+</style></head><body>""" + body + "</body></html>"
 
 
 def result(board):
@@ -211,6 +231,17 @@ class Trainer(tk.Tk):
                 parent=self)
             return
 
+        try:
+            from tkinterweb import HtmlFrame
+            html = render_readme(content)
+        except ImportError:
+            messagebox.showerror(
+                "README-Viewer nicht installiert",
+                "Für die formatierte Anzeige werden Markdown und TkinterWeb benötigt.\n\n"
+                "Installiere sie mit:\npython -m pip install -r requirements.txt",
+                parent=self)
+            return
+
         window = tk.Toplevel(self)
         self.readme_window = window
         window.title("Tic-Tac-Toe: README / Hilfe")
@@ -220,14 +251,20 @@ class Trainer(tk.Tk):
         window.rowconfigure(0, weight=1)
         window.columnconfigure(0, weight=1)
 
-        text = ScrolledText(window, wrap="word", font="TkFixedFont", padx=12, pady=12)
-        text.grid(row=0, column=0, sticky="nsew", padx=12, pady=(12, 0))
-        text.insert("1.0", content)
-        text.configure(state="disabled")
+        try:
+            viewer = HtmlFrame(window, messages_enabled=False, javascript_enabled=False,
+                               on_link_click=webbrowser.open)
+            viewer.grid(row=0, column=0, sticky="nsew", padx=12, pady=(12, 0))
+            viewer.load_html(html, base_url=readme_path.as_uri())
+        except tk.TclError as exc:
+            window.destroy()
+            self.readme_window = None
+            messagebox.showerror("README-Viewer nicht verfügbar", str(exc), parent=self)
+            return
         ttk.Button(window, text="Schließen", command=window.destroy).grid(
             row=1, column=0, pady=12)
         window.bind("<Escape>", lambda _: window.destroy())
-        text.focus_set()
+        viewer.focus_set()
 
     def new_game(self):
         if self.pending_job is not None:
