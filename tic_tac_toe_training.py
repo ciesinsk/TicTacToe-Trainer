@@ -7,7 +7,9 @@ Benötigt nur die Python-Standardbibliothek (Tkinter).
 import random
 import tkinter as tk
 from functools import lru_cache
-from tkinter import ttk
+from pathlib import Path
+from tkinter import messagebox, ttk
+from tkinter.scrolledtext import ScrolledText
 
 
 LINES = (
@@ -149,6 +151,7 @@ class Trainer(tk.Tk):
         self.pending = False
         self.pending_job = None
         self.hint_shown = False
+        self.readme_window = None
         self.player = tk.StringVar(value="X")
         self.mode = tk.StringVar(value="Früh: bei erster Gelegenheit")
         self.status = tk.StringVar()
@@ -183,11 +186,48 @@ class Trainer(tk.Tk):
         controls.grid(row=6, column=0, columnspan=3, pady=(10, 0))
         ttk.Button(controls, text="Zug prüfen / Tipp", command=self.hint).pack(side="left", padx=3)
         ttk.Button(controls, text="Neue Runde", command=self.new_game).pack(side="left", padx=3)
+        ttk.Button(controls, text="README / Hilfe", command=self.show_readme).pack(side="left", padx=3)
         ttk.Label(frame, textvariable=self.status, wraplength=340).grid(
             row=7, column=0, columnspan=3, sticky="w", pady=(12, 3))
         ttk.Label(frame, textvariable=self.details, wraplength=340).grid(
             row=8, column=0, columnspan=3, sticky="w")
         self.new_game()
+
+    def show_readme(self):
+        """Öffnet die lokale README in einem eigenen, schreibgeschützten Fenster."""
+        if self.readme_window is not None and self.readme_window.winfo_exists():
+            self.readme_window.deiconify()
+            self.readme_window.lift()
+            self.readme_window.focus_set()
+            return
+
+        readme_path = Path(__file__).resolve().with_name("README.md")
+        try:
+            content = readme_path.read_text(encoding="utf-8")
+        except (OSError, UnicodeError) as exc:
+            messagebox.showerror(
+                "README nicht verfügbar",
+                f"Die README konnte nicht gelesen werden:\n{readme_path}\n\n{exc}",
+                parent=self)
+            return
+
+        window = tk.Toplevel(self)
+        self.readme_window = window
+        window.title("Tic-Tac-Toe: README / Hilfe")
+        window.geometry("760x560")
+        window.minsize(420, 300)
+        window.transient(self)
+        window.rowconfigure(0, weight=1)
+        window.columnconfigure(0, weight=1)
+
+        text = ScrolledText(window, wrap="word", font="TkFixedFont", padx=12, pady=12)
+        text.grid(row=0, column=0, sticky="nsew", padx=12, pady=(12, 0))
+        text.insert("1.0", content)
+        text.configure(state="disabled")
+        ttk.Button(window, text="Schließen", command=window.destroy).grid(
+            row=1, column=0, pady=12)
+        window.bind("<Escape>", lambda _: window.destroy())
+        text.focus_set()
 
     def new_game(self):
         if self.pending_job is not None:

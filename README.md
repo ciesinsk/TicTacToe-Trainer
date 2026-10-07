@@ -23,4 +23,6 @@ Wähle oben, ob du **X** oder **O** spielst. X beginnt immer; wenn du O wählst,
 | Später: kein Sofortgewinn | Wartet bis später und macht nur einen Fehler, der dir keinen sofortigen Gewinnzug gibt. |
 | Späte Trainingsstellung laden | Beginnt direkt nach einem späteren Fehler des Computers. Finde den Gewinnweg. |
 
+**README / Hilfe** öffnet diese Anleitung als Markdown-Text in einem eigenen, scrollbaren Lesefenster. Der Text lässt sich markieren und kopieren, aber nicht bearbeiten. Ein erneuter Klick holt das offene Fenster nach vorne. Mit **Schließen** oder **Esc** schließt du es. Die Datei `README.md` muss neben `tic_tac_toe_training.py` liegen; die Anleitung ist auch offline verfügbar.
+
 Nach seinem einmaligen Fehler verteidigt sich der Computer wieder optimal. In einer selbst gespielten Partie kann eine passende Fehlergelegenheit ausbleiben, insbesondere wenn du vorher selbst von der optimalen Linie abweichst. Gedrehte und gespiegelte Stellungen sind ebenfalls enthalten.
