@@ -81,3 +81,30 @@ Die folgenden Beispiele decken, zusammen mit ihren Drehungen und Spiegelungen, a
 Nach **X5, O2** spielt X auf **1**. X droht nun über die Diagonale **1–5–9** auf Feld **9** zu gewinnen. O muss deshalb auf **9** antworten. X spielt anschließend auf **7** und droht gleichzeitig auf **3** (Diagonale 3–5–7) und auf **4** (Spalte 1–4–7). Egal, welches Feld O blockt: X gewinnt auf dem anderen.
 
 Antwortet O auf **X5** dagegen mit einer **Ecke**, ist das kein Fehler. Das erklärt, warum die Mitteleröffnung gegen einen richtig antwortenden Gegner keinen Gewinn garantiert. Um frühe Fehler gezielt zu üben, wähle im Trainer **X** und **Früh: bei erster Gelegenheit**. Mit **Zug prüfen / Tipp** kannst du prüfen, welche Fortsetzungen den Gewinn bewahren.
+
+## Gabeln nach einer richtigen Antwort von O vorbereiten
+
+Auch wenn O im ersten Zug richtig antwortet, kannst du auf spätere Gabelmöglichkeiten spielen. Dein Ziel ist dann, die eigene Remischance zu bewahren und einen späteren Fehler auszunutzen. Die Vorbereitung allein erzwingt noch keinen Sieg: Spielt O weiterhin richtig, bleibt ein Remis möglich.
+
+### Kanteneröffnung: nach X2 mit X4 oder X6 fortsetzen
+
+Mit X auf zwei benachbarten Kanten lassen sich Gabeln vorbereiten. Welche der beiden Fortsetzungen sicher ist, hängt jedoch von Os erster Antwort ab:
+
+| Zugfolge bis zur ersten Antwort | Fortsetzung, die die Remischance bewahrt | Gefährliche Fortsetzung |
+| --- | --- | --- |
+| X2, O1 | X4 | X6 ermöglicht einen erzwungenen Sieg für O. |
+| X2, O3 | X6 | X4 ermöglicht einen erzwungenen Sieg für O. |
+| X2, O5 | X4 oder X6 | Keine der beiden verliert bei optimaler Fortsetzung. |
+| X2, O8 | X4 oder X6 | Keine der beiden verliert bei optimaler Fortsetzung. |
+
+**Eine mögliche Falle:** Nach **X2, O5, X4** ist **O8** ein Fehler. Mit **X1** erzeugst du eine Gabel: Du drohst auf **3** über die Reihe 1–2–3 und auf **7** über die Spalte 1–4–7. O kann nur eine der beiden Drohungen blocken.
+
+**Die Gegenfalle von O:** Nach **X2, O1, X6** kann O mit **O7** den Sieg erzwingen. O droht zunächst auf **4** über die Spalte 1–4–7. Du musst mit **X4** blocken. Anschließend spielt O auf **5**: Das blockt deine Reihe 4–5–6 und erzeugt gleichzeitig eine Gabel auf **3** (Diagonale 3–5–7) und **9** (Diagonale 1–5–9). Du kannst nur eine davon abwehren. Nach **X2, O3, X4** gilt die gespiegelte Gegenfalle.
+
+### Eckeneröffnung: nach X1, O5 mit X6 fortsetzen
+
+Die Folge **X1, O5, X6** bewahrt deine Remischance und bereitet eine mögliche Gabel vor. Antwortet O anschließend mit **4 oder 7**, spielst du **X3**. Du drohst dann gleichzeitig auf **2** über die Reihe 1–2–3 und auf **9** über die Spalte 3–6–9. O hat in beiden Fällen keinen eigenen sofortigen Gewinnzug und kann die Gabel nicht mehr abwehren.
+
+O kann diese Falle vermeiden: Mit **2, 3, 8 oder 9** als zweitem O-Zug bleibt bei optimalem Spiel ein Remis möglich. Diese Antworten sind also keine entscheidenden Fehler.
+
+**Merksatz:** Bereite eine Gabel vor, ohne selbst einen erzwungenen Verlust zuzulassen. Prüfe dabei auch die Drohungen von O. Im Trainer zeigt **Zug prüfen / Tipp**, ob deine Stellung weiterhin remis ist oder nach einem Fehler des Gegners einen erzwungenen Gewinn enthält.
