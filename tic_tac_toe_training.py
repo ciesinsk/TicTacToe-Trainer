@@ -1,13 +1,15 @@
 """Tic-Tac-Toe Trainer
 
 Start: python tic_tac_toe_training.py
-Benötigt nur die Python-Standardbibliothek (Tkinter).
+Tkinter; für den README-Viewer zusätzlich: pip install -r requirements.txt
 """
 
 import random
 import tkinter as tk
+import webbrowser
 from functools import lru_cache
-from tkinter import ttk
+from pathlib import Path
+from tkinter import messagebox, ttk
 
 
 LINES = (
@@ -16,6 +18,26 @@ LINES = (
     (0, 4, 8), (2, 4, 6),
 )
 EMPTY = "." * 9
+
+
+def render_readme(content):
+    """Erzeugt HTML im Speicher; die README bleibt die einzige Quelldatei."""
+    import markdown
+
+    body = markdown.markdown(content, extensions=["tables", "fenced_code"])
+    return """<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+body { font-family: sans-serif; font-size: 14px; color: #202020;
+       background-color: white; margin: 20px; }
+h1 { font-size: 26px; } h2 { font-size: 20px; }
+p, li { line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #cccccc; padding: 8px; text-align: left; }
+th { background-color: #eeeeee; }
+pre { background-color: #f3f3f3; padding: 12px; }
+code { font-family: monospace; }
+a { color: #1559a6; }
+</style></head><body>""" + body + "</body></html>"
 
 
 def result(board):
@@ -149,6 +171,7 @@ class Trainer(tk.Tk):
         self.pending = False
         self.pending_job = None
         self.hint_shown = False
+        self.readme_window = None
         self.player = tk.StringVar(value="X")
         self.mode = tk.StringVar(value="Früh: bei erster Gelegenheit")
         self.status = tk.StringVar()
@@ -183,11 +206,65 @@ class Trainer(tk.Tk):
         controls.grid(row=6, column=0, columnspan=3, pady=(10, 0))
         ttk.Button(controls, text="Zug prüfen / Tipp", command=self.hint).pack(side="left", padx=3)
         ttk.Button(controls, text="Neue Runde", command=self.new_game).pack(side="left", padx=3)
+        ttk.Button(controls, text="README / Hilfe", command=self.show_readme).pack(side="left", padx=3)
         ttk.Label(frame, textvariable=self.status, wraplength=340).grid(
             row=7, column=0, columnspan=3, sticky="w", pady=(12, 3))
         ttk.Label(frame, textvariable=self.details, wraplength=340).grid(
             row=8, column=0, columnspan=3, sticky="w")
         self.new_game()
+
+    def show_readme(self):
+        """Öffnet die lokale README in einem eigenen, schreibgeschützten Fenster."""
+        if self.readme_window is not None and self.readme_window.winfo_exists():
+            self.readme_window.deiconify()
+            self.readme_window.lift()
+            self.readme_window.focus_set()
+            return
+
+        readme_path = Path(__file__).resolve().with_name("README.md")
+        try:
+            content = readme_path.read_text(encoding="utf-8")
+        except (OSError, UnicodeError) as exc:
+            messagebox.showerror(
+                "README nicht verfügbar",
+                f"Die README konnte nicht gelesen werden:\n{readme_path}\n\n{exc}",
+                parent=self)
+            return
+
+        try:
+            from tkinterweb import HtmlFrame
+            html = render_readme(content)
+        except ImportError:
+            messagebox.showerror(
+                "README-Viewer nicht installiert",
+                "Für die formatierte Anzeige werden Markdown und TkinterWeb benötigt.\n\n"
+                "Installiere sie mit:\npython -m pip install -r requirements.txt",
+                parent=self)
+            return
+
+        window = tk.Toplevel(self)
+        self.readme_window = window
+        window.title("Tic-Tac-Toe: README / Hilfe")
+        window.geometry("760x560")
+        window.minsize(420, 300)
+        window.transient(self)
+        window.rowconfigure(0, weight=1)
+        window.columnconfigure(0, weight=1)
+
+        try:
+            viewer = HtmlFrame(window, messages_enabled=False, javascript_enabled=False,
+                               on_link_click=webbrowser.open)
+            viewer.grid(row=0, column=0, sticky="nsew", padx=12, pady=(12, 0))
+            viewer.load_html(html, base_url=readme_path.as_uri())
+        except tk.TclError as exc:
+            window.destroy()
+            self.readme_window = None
+            messagebox.showerror("README-Viewer nicht verfügbar", str(exc), parent=self)
+            return
+        ttk.Button(window, text="Schließen", command=window.destroy).grid(
+            row=1, column=0, pady=12)
+        window.bind("<Escape>", lambda _: window.destroy())
+        viewer.focus_set()
 
     def new_game(self):
         if self.pending_job is not None:
